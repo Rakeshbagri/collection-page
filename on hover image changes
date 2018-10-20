@@ -1,7 +1,17 @@
 #use multipal images
 
+# first and last image 
 
  <a class="grid-product__image-link" href="{{ product.url | within: collection }}">
          <img class="grid-product__image" src="{{ product.featured_image.src | img_url: '1024x' }}" alt="{{ product.featured_image.alt | escape }}">
-           <div class="hidden">    <img class="hidden" src="{{ product.images.last | img_url: '1024x' }}" alt="{{ product.images.last.alt | escape }}" /> </div>
+             <img class="hidden" src="{{ product.images.last | img_url: '1024x' }}" alt="{{ product.images.last.alt | escape }}" />  
         </a> 
+
+# first and second image
+ <a class="grid-product__image-link" href="{{ product.url | within: collection }}">
+         <img class="grid-product__image" src="{{ product.featured_image.src | img_url: '1024x' }}" alt="{{ product.featured_image.alt | escape }}">
+               <img class="hidden" src="{{ product.images[1] | product_img_url: 'large' }}" alt="{{ product.images[1].alt | escape }}" />
+ 
+        </a> 
+
+  
