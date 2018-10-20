@@ -1,0 +1,96 @@
+  <button type="button" class="btn btn-default btn-lg" id="myBtn-{{ forloop.index }}">Quick view</button>
+
+
+<!-- Modal -->
+  <div class="modal fade" id="myModal-{{ forloop.index }}" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+         <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <div class="modal-body">
+         <div id="quick-{{forloop.index}}" class="">
+ 
+          <form action="/cart/add" method="post" enctype="multipart/form-data" style="margin:0;">
+      	<div class="row">
+            <div class="large-6 columns">
+            
+			  <!-- for product image zoom - use the #id sets here for different behaviour - we add the stripped product URL to give it a unique ID -->
+				<script>
+					$(document).ready(function(){
+						$('#zoom{{ product.url | within: collection | replace: '/', '-' }}').zoom();
+						$('#grab{{ product.url | within: collection | replace: '/', '-' }}').zoom({ on:'grab' });
+						$('#click{{ product.url | within: collection | replace: '/', '-' }}').zoom({ on:'click' });			 
+						$('#toggle{{ product.url | within: collection | replace: '/', '-' }}').zoom({ on:'toggle' });
+					});
+				</script>
+                
+                <div id="zoom{{ product.url | within: collection | replace: '/', '-' }}">
+                	<img src="{{ product.featured_image | product_img_url: 'master' }}" alt="{{ product.title | escape  }}" />
+                </div>
+                	
+            </div>
+            <div class="large-6 columns">
+                <h1 itemprop="name">{{ product.title }}</h1>
+                <div id="product-description" class="rte" itemprop="description">
+                    <p>{{ product.description | strip_html | truncate: 180 | replace: 'Description', '' }}</p>
+                </div>
+                
+                <div id="product-price" itemprop="offers" itemscope itemtype="http://schema.org/Offer">
+                        <meta itemprop="priceCurrency" content="{{ shop.currency }}" />
+                        {% if product.available %}
+                        <link itemprop="availability" href="http://schema.org/InStock" />
+                        {% else %}
+                        <link itemprop="availability" href="http://schema.org/OutOfStock" />
+                        {% endif %}
+                        <h5>
+                            {% if product.compare_at_price > product.price %}
+                            <span class="price" itemprop="price">{{ product.price | money }}</span>&nbsp;<s class="sale-price">{{ product.compare_at_price_max | money }}</s>
+                            {% else %}
+                            <span class="price" itemprop="price">{{ product.price | money }}</span>
+                            {% endif %}
+                        </h5>
+                </div>
+                
+                {% comment %} Uncomment the next line if you want brands in the 'quick view' popup {% endcomment %}
+                <!-- <h5 itemprop="brand">{{ product.vendor | link_to: vendor_url }}</h5> -->
+                
+                {% assign hide_default_title = false %}
+                {% if product.variants.size == 1 and product.variants.first.title contains 'Default' %}
+                    {% assign hide_default_title = true %}
+                {% endif %}       
+                
+                  
+        <div class="stes">
+                <input class="button" type="submit" name="add" id="add" value="Add to cart">
+    
+               {% for tag in product.tags %} 
+  {%if tag contains 'url_'  %}
+  {% assign content = tag | split: 'url_' %}
+  <a class="amazon-btn" href="{{ content }}"> BUY FROM AMAZON </a>
+  {% endif %}
+          {%endfor%}</div>
+              
+            </div>
+      	</div>
+</form> 
+           
+           
+               <div class="clr"></div>    
+          
+</div> 
+                  <div class="clr"></div>
+        </div>
+        <div class="clr"></div>
+      </div>
+    </div>
+</div>
+
+
+<script>
+$(document).ready(function(){
+    $("#myBtn-{{ forloop.index }}").click(function(){
+        $("#myModal-{{ forloop.index }}").modal();
+    });
+});
+</script>
