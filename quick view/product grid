@@ -2,3 +2,6 @@
 # on click show product detail in pop up
 
 #create snippets and call product grid file   {% include 'quickview' %}
+
+
+#add any pop up
