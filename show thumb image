@@ -1,0 +1,33 @@
+https://www.isawitfirst.com/collections/sale
+
+#show all product image on collection page with slider
+
+
+  <div class="one-time">
+  {%for image in product.images%}
+   <img src="{{image | img_url: 'master'}}" class="img-responsive">
+{%endfor%}
+  </div>
+
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+ 
+<link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"/>
+
+ 
+
+<script type="text/javascript" src="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
+				
+<script>
+
+$('.one-time').slick({
+  dots: true,
+  infinite: true,
+  speed: 300,
+  slidesToShow: 1,
+  adaptiveHeight: true
+});
+	
+            </script>
